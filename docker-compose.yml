@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: "showw-db"
+    image: postgres:15.3-alpine
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_UESR=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - .db:/var/lib/postgresql/data
+      - ~/javascript/showwcase-backend-assignment/seed.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    
+
+  app:
+    container_name: showw-app
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      - SERVER_PORT=3000
+      - DATABASE_HOST=db 
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=pass
+      - DATABASE_NAME=showw-db
+      - DATABASE_PORT=5432
+      - DATABASE_MAX_CONNS=50
+      - DATABASE_SSL=disable
+      - CACHE_TYPE=REDIS
+      - CACHE_URL=""
+      - CACHE_PASSWORD=""
+      - CACHE_USERNAME=""
+      - RANDOM_USER_SERVICE_CLIENT_TYPE=HTTP
+      - RANDOM_USER_SERVICE_BASE_URL=https://randomuser.me/
+      - RANDOM_USER_SERVICE_PATH=/api
+      - RANDOM_USER_SERVICE_CLIENT_TIMEOUT=1000
+      - RANDOM_USER_SERVICE_CLIENT_HACCEPT=application/json
+      - LOGGER_ERROR_FILE=errors.log
+      - LOGGER_LOG_FILE=logs.log
+
+  cache:
+    container_name: showw-cache
+    image: redis
+    ports:
+      - "6379:6379"
