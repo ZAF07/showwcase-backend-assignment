@@ -8,6 +8,7 @@ In this project, we are implementing the Hexagonal Architecture pattern (also kn
 
 The Hexagonal Architecture offers several benefits that enhance the quality and maintainability of the software. Firstly, it facilitates the decoupling of the application's core logic from the external infrastructure, such as databases, APIs, or frameworks. This separation ensures that changes to external components do not impact the business logic, making it easier to switch out or update these components without affecting the core functionality. Secondly, the pattern promotes testability and test-driven development (TDD) since the business logic can be tested in isolation from the external dependencies by using ports and adapters. Overall, the Hexagonal Architecture provides a modular and scalable structure, enabling teams to maintain a clean and organized codebase, while allowing the application to evolve and adapt to changing requirements with ease.
 
+```
 Project Layout:
 project-root/
 |- dist -> Typescript compiles here. This is the final code
@@ -43,6 +44,7 @@ project-root/
 |- index.ts -> Main starting point
 |- tsconfig.json
 |- package.json
+```
 
 # Starting the Application:
 
