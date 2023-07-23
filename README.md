@@ -50,7 +50,7 @@ project-root/
 
 ## Requirements:
 
-You need to have the Docker client installed on your computer.
+You need to have the Docker desktop installed on your computer.
 
 ## Usage:
 
