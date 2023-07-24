@@ -51,7 +51,7 @@ export default class AuthAdapterHTTP {
 
   public async profile(req: Request, res: Response, next: NextFunction) {
     try {
-      // Retrieved from the auth middleware
+      // Retrieved user email from the auth middleware
       const email = req.user;
       if (!email) {
         throw new CustomError("Auth Adapter", "Missing email in request", 400);
