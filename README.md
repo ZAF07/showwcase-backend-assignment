@@ -94,7 +94,7 @@ How to get a JWT token to be authorized to use the `api/auth/profile` route?
 
 ### JWT Expire
 
-The current setting is that the JWT setting expires in 20 seconds.
+The current setting is that the JWT token expires in 20 seconds.
 
 You can change this if you like simply by configuring the value in the specific env configuration file.
 
@@ -106,7 +106,7 @@ For running in Docker, `stage-default.yml` is used.
 > 🚨 Important to note that in a real set up, you would want to use some form of build tool to inject the config files into the application at build time. This here is a simplefied example only
 
 This application depends on a configuration file to start.
-In the configuratio file we specify all the credentials and application settings.
+In the configuration file we specify all the credentials and application settings.
 
 We are using `node-config` which read and loads a specified config file into the runtime.
 
