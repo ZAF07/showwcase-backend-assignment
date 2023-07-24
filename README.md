@@ -72,12 +72,14 @@ How to get a JWT token to be authorized to use the `api/auth/profile` route?
 2. Login the user @ `POST /api/auth/login` (You must pass the same credentials you gave when registering. You will get a JWT token which expires in `20 seconds`)
 3. Make the call to `/api/auth/profile`. You need to add an `Authorization` header in the request headers with the value of your JWT token
 
-Troubleshoot Docker start up:
+##Troubleshoot Docker start up:
 
 These are some common errors faced when running `docker-compose up`
 
-1. `error: database "showwdb" does not exist`
-   Fix:
+Error: `error: database "showwdb" does not exist`
+
+Fix:
+
 1. Find the Postgres's container's ID: Open a new terminal and run `docker ps`
 1. Open an interactive shell inside the Postgres container: `docker exec -it <container-id> sh`
 1. Connect to `psql` inside the container: `psql -U <POSTGRES_USER>`
