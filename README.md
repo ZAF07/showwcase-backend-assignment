@@ -77,7 +77,7 @@ You have one dependency as of now: `PostgreSQL`.
 
 To start the application locally with a database, simply run `make start-local-d`
 
-To start the application locally with your own database, simply run: `make start-local`
+To start the application locally with your own database, simply run: `make start-local` and don't forget to go into `./config/local-local.yml` and update your database credentials
 
 ## Application information
 
