@@ -22,3 +22,6 @@ start-db:
 start-local:
 	docker-compose up -d db
 	npm run dev
+
+test:
+	npx jest --detectOpenHandles

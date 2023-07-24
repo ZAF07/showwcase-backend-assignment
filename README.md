@@ -109,6 +109,12 @@ Because we lack a real infrastructure, we are simply setting and commiting the c
 
 In a real world usage, this helps improve backing services abstraction (databases, caches, external API), configuration management and ease of deployment.
 
+### Testing the application
+
+We are using Jest for testing.
+
+To run tests, run: `make test`
+
 ## Troubleshoot Docker start up:
 
 These are some common errors faced when running `docker-compose up`

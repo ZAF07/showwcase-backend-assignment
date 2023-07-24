@@ -20,10 +20,13 @@ import { CreateInfoLogger, CreateErrorLogger } from "../utils/logger/logger";
 import ErrorMiddleware from "../utils/middleware/error_middleware/error_middleware";
 import LoggingMiddleware from "../utils/middleware/logging_middleware/logging_middleware";
 import PostgresDBAdapter from "../adapters/db/postgres/postgres";
+import MockUserService from "../core/services/user/mock_user_service";
+import MockPostgresDBAdapter from "../adapters/db/postgres/mock_postgres";
+import MockAuthService from "../core/services/auth/mock_auth_service";
 
 // The app class represents the entire app. It initialises all dependencies and starts the application ..
 export default class App {
-  private app: Application;
+  public app: Application;
   private alogger: Logger;
   private elogger: Logger;
   private cacheClient: ReturnType<typeof createClient>;
@@ -66,6 +69,14 @@ export default class App {
   }
 
   private initServices() {
+    // We can control what modules to mock in the testing environment with env var
+    // For this case, if env==test we are testing only the adapters and using MOCK Services.
+    // This was we can perform unit test for each modules
+    if (process.env.NODE_ENV == "test") {
+      this.userService = new MockUserService();
+      this.authService = new MockAuthService(new MockPostgresDBAdapter());
+      return;
+    }
     const pad = new PostgresDBAdapter(this.appConfig.datastore);
     this.authService = new AuthService(pad, this.cacheAdapter);
     this.userService = new UserService(this.cacheAdapter, this.userServiceAPI);

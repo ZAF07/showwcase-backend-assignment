@@ -23,7 +23,6 @@ export default class JWTAuthenticationHelper {
 
   static authenticate(req: Request, res: Response, next: NextFunction): void {
     const token = req.headers.authorization;
-
     if (!token) {
       throw new CustomError(
         "Auth middleware",
@@ -31,6 +30,7 @@ export default class JWTAuthenticationHelper {
         401
       );
     }
+
     const decodedUser = JWTAuthenticationHelper.verifyToken(
       token
     ) as JwtPayload | null;
