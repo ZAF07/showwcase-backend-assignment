@@ -56,8 +56,12 @@ You need to have the Docker desktop installed on your computer.
 
 To ensure that you have the correct build (typescript compiler), build the package before you start the container using: `npm run build`.
 
+## Running with Docker
+
 Simply run `make start`.
 This will start PostgreSQL, Redis, and the application instance at once.
+
+### Run with Docker in detached mode
 
 To start in detached mode, run : `make start-d`
 To stop the detached mode, run : `make stop-d`
@@ -65,6 +69,15 @@ To stop the detached mode, run : `make stop-d`
 To remove the containers, run : `make down`
 
 You can start interacting with the API.
+
+## Running Locally
+
+You can also run the application locally without Docker.
+You have one dependency as of now: `PostgreSQL`.
+
+To start the application locally with a database, simply run `make start-local`
+
+## Application information
 
 This application has 2 exposed endpoints:
 
@@ -76,6 +89,25 @@ How to get a JWT token to be authorized to use the `api/auth/profile` route?
 1. Register a new user @ `POST /api/auth/register` (Your profile will be saved in the system with the given email & password)
 2. Login the user @ `POST /api/auth/login` (You must pass the same credentials you gave when registering. You will get a JWT token which expires in `20 seconds`)
 3. Make the call to `/api/auth/profile`. You need to add an `Authorization` header in the request headers with the value of your JWT token
+
+### Configs
+
+> 🚨 Important to note that in a real set up, you would want to use some form of build tool to inject the config files into the application at build time. This here is a simplefied example only
+
+This application depends on a configuration file to start.
+In the configuratio file we specify all the credentials and application settings.
+
+We are using `node-config` which read and loads a specified config file into the runtime.
+
+The configs can be found in the `./config` directory.
+We have multiple instances of it for different environments.
+
+We use a different config file for local, Docker and Prod environments.
+This is done via setting the `NODE_ENV` & `NODE_APP_INSTANCE` environment variable upon start-up.
+
+Because we lack a real infrastructure, we are simply setting and commiting the configs into the repository along with the application. You don't have to worry about setting up the config values as they are already in the config files for this simple application. (🚨 NOT RECCOMENDED IN REAL WORLD APPLICATIONS)
+
+In a real world usage, this helps improve backing services abstraction (databases, caches, external API), configuration management and ease of deployment.
 
 ## Troubleshoot Docker start up:
 
