@@ -13,11 +13,13 @@ export default class AuthService implements IAuthService {
     private db: IDatastoreInterface,
     private cache: ICacheRepository
   ) {
+    // Bind the methods to this class instance to ensure correct context.
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.profile = this.profile.bind(this);
   }
 
+  // Handles user registration
   public async register(email: string, password: string): Promise<User | null> {
     try {
       const userExists = await this.db.getUser(email);
@@ -36,15 +38,18 @@ export default class AuthService implements IAuthService {
     }
   }
 
+  // Handles user login and generates an authentication token (JWT)
   public async login(email: string, password: string): Promise<string | null> {
     try {
       let userEmail;
       let userPwd;
 
+      // Retrieve the user's email and hashed password from the database
       const res = await this.db.getUser(email);
       userEmail = res?.email;
       userPwd = res?.password;
 
+      // Check if the user exists in the database
       if (!res || res == null) {
         throw new CustomError(
           "Auth Service",
@@ -53,6 +58,7 @@ export default class AuthService implements IAuthService {
         );
       }
 
+      // Check if the user's email and password were retrieved successfully
       if (!userEmail || userEmail == undefined) {
         throw new CustomError(
           "Auth Service",
@@ -69,6 +75,7 @@ export default class AuthService implements IAuthService {
         );
       }
 
+      // Compare the provided password with the hashed password in the database
       const matched = await BcryptHelper.compareHash(password, userPwd);
       if (!matched) {
         throw new CustomError(
@@ -78,6 +85,7 @@ export default class AuthService implements IAuthService {
         );
       }
 
+      // Create a JWT payload with the user's email and hashed password
       const userPayload: JwtPayload = { email: userEmail, password: userPwd };
       const userToken = JWTAuthenticationHelper.generateToken(userPayload);
 
@@ -86,6 +94,7 @@ export default class AuthService implements IAuthService {
 
       return userToken;
     } catch (error) {
+      // Handle any errors and rethrow as CustomError
       if (error instanceof CustomError) {
         throw new CustomError(error.name, error.message, error.statusCode);
       }
@@ -93,9 +102,13 @@ export default class AuthService implements IAuthService {
     }
   }
 
+  // Retrieves user profile information from the database
   public async profile(email: string): Promise<User | null> {
     try {
+      // Get the user profile from the database
       const res = await this.db.getProfile(email);
+
+      // Check if the user profile exists
       if (!res || res == null) {
         throw new CustomError("Auth Service", "User not found", 404);
       }

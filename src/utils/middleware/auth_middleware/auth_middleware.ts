@@ -4,9 +4,15 @@ import { JwtPayload } from "../../../types/types";
 import CustomError from "../../errors/errors";
 
 const secretKey = "extr4_s30r137-k3y";
-
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { email: string }; // Add this to extend the Request interface
+    }
+  }
+}
 export default class JWTAuthenticationHelper {
-  private static readonly expiresIn: string = "20s";
+  private static readonly expiresIn: string = "20h";
 
   static generateToken(payload: JwtPayload): string {
     return jwt.sign(payload, secretKey, { expiresIn: this.expiresIn });
@@ -22,6 +28,8 @@ export default class JWTAuthenticationHelper {
   }
 
   static authenticate(req: Request, res: Response, next: NextFunction): void {
+    console.log("cal");
+
     const token = req.headers.authorization;
     if (!token) {
       throw new CustomError(
@@ -42,7 +50,8 @@ export default class JWTAuthenticationHelper {
     }
 
     // Set the decoded user payload in the request object for further processing
-    (req as any).user = decodedUser;
+    (req as any).user = decodedUser?.email;
+    console.log("====> ", req.user);
 
     next();
   }

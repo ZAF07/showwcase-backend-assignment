@@ -13,6 +13,7 @@ export class UserService implements IUserService {
     this.fetchRamdonUser = this.fetchRamdonUser.bind(this);
   }
 
+  // Fetches a random user from an external API
   public async fetchRamdonUser(): Promise<RandomUser | null> {
     try {
       const randomUser = await this.randomAPIAdapter.fetchRandomUser();
@@ -22,9 +23,10 @@ export class UserService implements IUserService {
         return null;
       }
 
+      // Ensure type safety for firstName and age properties
       const user: RandomUser = {
-        firstName: randomUser?.name.first || "a",
-        age: randomUser?.dob.age || 2,
+        firstName: randomUser?.name.first || "Unknown",
+        age: randomUser?.dob.age || 0,
       };
       return user;
     } catch (error) {
