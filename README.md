@@ -119,15 +119,28 @@ To run tests, run: `make test`
 
 These are some common errors faced when running `docker-compose up`
 
-Error: `error: database "showwdb" does not exist`
+## Error: `error: database "showwdb" does not exist`
 
-Fix:
+### Fix:
 
 > Note: This is a brute force fix. After you created the DB and restart the containers, a volume mapped to project root (`.db`) will contain the information for starting Postgres with a database in the container
 
 1. Find the Postgres's container's ID: Open a new terminal and run `docker ps`
-1. Open an interactive shell inside the Postgres container: `docker exec -it <container-id> sh`
-1. Connect to `psql` inside the container: `psql -U <POSTGRES_USER>`
-1. Manually create a database inside the container: `create database <db-name>`
-1. Close the terminal session: `ctrl+d`
-1. Restart the containers: `docker-compose down` then `docker-compose up`
+2. Open an interactive shell inside the Postgres container: `docker exec -it <container-id> sh`
+3. Connect to `psql` inside the container: `psql -U <POSTGRES_USER>`
+4. Manually create a database inside the container: `create database <db-name>`
+5. Close the terminal session: `ctrl+d`
+6. Restart the containers: `docker-compose down` then `docker-compose up`
+
+## Error: 'Relations of 'users' not found AKA No user table
+
+### Fix:
+
+> Note: Again another 'brute force' fix. I don't want to spend too much time here for now so I decided to do a quick fix and come back later
+
+1. Find the Postgres's container's ID: Open a new terminal and run `docker ps`
+2. Open an interactive shell inside the Postgres container: `docker exec -it <container-id> sh`
+3. Connect to `psql` inside the container: `psql -U <POSTGRES_USER>`
+4. Connect to the database: `\c showwapp;`
+5. Copy contents from `./seed.sql` and paste into the command
+6. Exit the terminal and try the request again
