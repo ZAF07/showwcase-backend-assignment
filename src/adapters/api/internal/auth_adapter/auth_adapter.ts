@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { IAuthService } from "../../../../core/ports/auth_service_interface/auth_service_interface";
 import CustomError from "../../../../utils/errors/errors";
 
-// Adapter for the outside to interact with services via HTTP
+// Adapter for the outside to interact with services via HTTP (Controllers)
 export default class AuthAdapterHTTP {
   constructor(private authService: IAuthService) {
     this.register = this.register.bind(this);
@@ -42,7 +42,6 @@ export default class AuthAdapterHTTP {
   }
 
   public async profile(req: Request, res: Response, next: NextFunction) {
-    // Implement the JWT middleware. That is the module that checks for the use's token. if not exsits, return error
     try {
       const { email } = req.body;
       if (!email) {

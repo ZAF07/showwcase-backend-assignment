@@ -48,7 +48,6 @@ export default class App {
     // Initialise all dependencies. The order matters
     this.initLogger();
     this.initCache();
-    // this.initAPIClients();
     this.initExternalAPIs();
     this.initServices();
     this.initHanlders();
@@ -64,13 +63,13 @@ export default class App {
   }
 
   private initExternalAPIs() {
-    // 💡This should be looping through a list of external APIs that the application needs. But for this test this is fine
+    // 💡 This should be looping through a list of external APIs that the application needs. But for this test this is fine since we only have one external API to call
     this.userServiceAPI = new UserAPI(this.appConfig.externalService);
   }
 
   private initServices() {
-    // We can control what modules to mock in the testing environment with env var
-    // For this case, if env==test we are testing only the adapters and using MOCK Services.
+    // 💡 We can control what modules to mock in the testing environment with env var
+    // For this case, if env==test we are testing only the adapters and using MOCK Services and db/cache adapters.
     // This was we can perform unit test for each modules
     if (process.env.NODE_ENV == "test") {
       this.userService = new MockUserService();

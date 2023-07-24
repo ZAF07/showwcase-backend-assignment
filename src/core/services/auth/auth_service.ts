@@ -1,4 +1,3 @@
-import { connectToPostgres } from "../../../infrastructure/db/postgres/postgres_conn";
 import CustomError from "../../../utils/errors/errors";
 import { User } from "../../domain/models/user";
 import { IAuthService } from "../../ports/auth_service_interface/auth_service_interface";
@@ -8,6 +7,7 @@ import BcryptHelper from "../../../utils/hashing/bcrypt_hash";
 import JWTAuthenticationHelper from "../../../utils/middleware/auth_middleware/auth_middleware";
 import { JwtPayload } from "../../../types/types";
 
+// This class represents the core business logic of the application. It sits in the core of the application and exposes interfaces for adapters to implement in order to use this service
 export default class AuthService implements IAuthService {
   constructor(
     private db: IDatastoreInterface,

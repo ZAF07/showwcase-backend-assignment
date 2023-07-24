@@ -1,9 +1,7 @@
-// import { connectToPostgres } from "../../../infrastructure/db/postgres/postgres_conn";
 import CustomError from "../../../utils/errors/errors";
 import { User } from "../../domain/models/user";
 import { IAuthService } from "../../ports/auth_service_interface/auth_service_interface";
 import { IDatastoreInterface } from "../../ports/datastore_interface/datastore_interface";
-import BcryptHelper from "../../../utils/hashing/bcrypt_hash";
 import JWTAuthenticationHelper from "../../../utils/middleware/auth_middleware/auth_middleware";
 import { JwtPayload } from "../../../types/types";
 
@@ -66,6 +64,7 @@ export default class MockAuthService implements IAuthService {
         );
       }
 
+      // 🚨 Don't have to decrypt in testing environment
       //   const matched = await BcryptHelper.compareHash(password, userPwd);
       //   if (!matched) {
       //     throw new CustomError(
@@ -77,9 +76,6 @@ export default class MockAuthService implements IAuthService {
 
       const userPayload: JwtPayload = { email: userEmail, password: userPwd };
       const userToken = JWTAuthenticationHelper.generateToken(userPayload);
-
-      // Add JWT to cache for refresh token (mock)
-      //   this.cache.add("token");
 
       return userToken;
     } catch (error) {
