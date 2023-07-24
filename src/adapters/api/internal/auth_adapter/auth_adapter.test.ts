@@ -5,6 +5,8 @@ const a = new App();
 const aa = a.app;
 const existingUser: User = { email: "mock@mail.com", password: "000" };
 const newUser: User = { email: "mock_new@mail.com", password: "000" };
+const infiniteToken: string =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vY2tAbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCR4aEZ6cFZMUUc5bmZER0M1b3BheXZ1UzNpLzFCcERZd1BZekNsRHFKYXhVSThKWnJ2S2RJdSIsImlhdCI6MTY5MDE5NzIxMywiZXhwIjoxNjkwNzczMjEzfQ.GcZNT8lYJWl1LJ9rsinrT_3soozDCS5r1ZGqwII6kTI";
 
 describe("POST /api/auth/register", () => {
   it("should NOT register an existing user", async () => {
@@ -50,13 +52,12 @@ describe("POST /api/auth/login", () => {
   });
 });
 
-const infiniteToken: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRldGRvY2tlMkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJHFVSUI4dmZldHdzd1ZqN0xtb3lQN092aEtMLmNMWjlUOG93NVMuTHFkR3pEV3A0VHc3VFU2IiwiaWF0IjoxNjkwMTg4NDYxLCJleHAiOjE2OTAxODg0ODF9.YrZtJ9yt57XMeah4wig8Qw8M8KEfYe03LRt2LVSQVr0";
 describe("POST /api/auth/profile", () => {
   it("should NOT return the profile of a logged out user", async () => {
     const response = await request(aa)
       .post("/api/auth/profile")
-      .send(existingUser);
+      .send(existingUser)
+      .set("Authorization", infiniteToken);
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty(

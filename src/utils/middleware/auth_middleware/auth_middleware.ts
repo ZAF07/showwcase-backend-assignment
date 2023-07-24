@@ -28,8 +28,6 @@ export default class JWTAuthenticationHelper {
   }
 
   static authenticate(req: Request, res: Response, next: NextFunction): void {
-    console.log("cal");
-
     const token = req.headers.authorization;
     if (!token) {
       throw new CustomError(
