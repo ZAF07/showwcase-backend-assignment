@@ -120,7 +120,7 @@ Currently it only supports two environments:
 We use a different config file for local, Docker and Prod environments.
 This is done via setting the `NODE_ENV` & `NODE_APP_INSTANCE` environment variable upon start-up.
 
-Because we lack a real infrastructure, we are simply setting and commiting the configs into the repository along with the application. You don't have to worry about setting up the config values as they are already in the config files for this simple application. (🚨 NOT RECCOMENDED IN REAL WORLD APPLICATIONS)
+Because we lack a real infrastructure, we are simply setting and commiting the configs into the repository along with the application. You don't have to worry about setting up the config values (accept your database configs if running locally without the postgres Docker container) as they are already in the config files for this simple application. (🚨 NOT RECCOMENDED IN REAL WORLD APPLICATIONS)
 
 In a real world usage, this helps improve backing services abstraction (databases, caches, external API), configuration management and ease of deployment.
 
