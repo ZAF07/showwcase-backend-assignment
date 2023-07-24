@@ -94,7 +94,12 @@ How to get a JWT token to be authorized to use the `api/auth/profile` route?
 
 ### JWT Expire
 
-The current setting is that the JWT setting expires in 20 seconds
+The current setting is that the JWT setting expires in 20 seconds.
+
+You can change this if you like simply by configuring the value in the specific env configuration file.
+
+For local application start-up, `local-local.yml` is used.
+For running in Docker, `stage-default.yml` is used.
 
 ### Configs
 
@@ -107,6 +112,10 @@ We are using `node-config` which read and loads a specified config file into the
 
 The configs can be found in the `./config` directory.
 We have multiple instances of it for different environments.
+Currently it only supports two environments:
+
+1. Local (both with and without local PostgreSQL) (`make start-local` && `make start-local-d` both use the `local.local.yml` config)
+2. Docker (`make start-d`, `make start` both use the `stage-default.yml` config)
 
 We use a different config file for local, Docker and Prod environments.
 This is done via setting the `NODE_ENV` & `NODE_APP_INSTANCE` environment variable upon start-up.

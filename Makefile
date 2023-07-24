@@ -14,7 +14,7 @@ start:
 down: 
 	docker-compose down
 
-# Start database only
+# Start database container only
 start-db:
 	docker-compose up db
 
@@ -23,6 +23,7 @@ start-local-d:
 	docker-compose up -d db
 	npm run dev
 
+# Starts locally (you own database required)
 start-local:
 	npm run dev
 
