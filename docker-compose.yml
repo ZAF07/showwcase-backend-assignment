@@ -8,6 +8,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_UESR=postgres
+      - POSTGRES_DB=showwdb
     ports:
       - "5432:5432"
     volumes:

@@ -20,59 +20,77 @@ export default class AuthService implements IAuthService {
 
   public async register(email: string, password: string): Promise<User | null> {
     try {
+      const userExists = await this.db.getUser(email);
+      if (userExists != null) {
+        throw new CustomError("Auth service", "User already exists", 409);
+      }
       const hashPwd = await BcryptHelper.hashString(password);
       const newUser = { email, password: hashPwd };
       const res = await this.db.createProfile(newUser);
       return res;
     } catch (error) {
+      if (error instanceof CustomError) {
+        throw new CustomError(error.name, error.message, error.statusCode);
+      }
       throw new Error(String(error));
     }
   }
 
   public async login(email: string, password: string): Promise<string | null> {
-    let userEmail;
-    let userPwd;
+    try {
+      let userEmail;
+      let userPwd;
 
-    const res = await this.db.getUser(email);
-    userEmail = res?.email;
-    userPwd = res?.password;
+      const res = await this.db.getUser(email);
+      userEmail = res?.email;
+      userPwd = res?.password;
 
-    if (!res || res == null) {
-      throw new CustomError("Auth Service", "User not found", 404);
+      if (!res || res == null) {
+        throw new CustomError(
+          "Auth Service",
+          `User ${email} not found in database`,
+          404
+        );
+      }
+
+      if (!userEmail || userEmail == undefined) {
+        throw new CustomError(
+          "Auth Service",
+          `User's email ${email} not found`,
+          404
+        );
+      }
+
+      if (!userPwd || userPwd == undefined) {
+        throw new CustomError(
+          "Auth Service",
+          `User ${email}'s password not found in database`,
+          404
+        );
+      }
+
+      const matched = await BcryptHelper.compareHash(password, userPwd);
+      if (!matched) {
+        throw new CustomError(
+          "Auth Service",
+          "Password does not match the one in record",
+          403
+        );
+      }
+
+      const userPayload: JwtPayload = { email: userEmail, password: userPwd };
+      const userToken = JWTAuthenticationHelper.generateToken(userPayload);
+
+      // Add JWT to cache for refresh token (mock)
+      this.cache.add("token");
+
+      return userToken;
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw new CustomError(error.name, error.message, error.statusCode);
+      }
+      throw new Error(String(error));
     }
-
-    if (!userEmail || userEmail == undefined) {
-      throw new CustomError(
-        "Auth Service",
-        "User email not found in database",
-        404
-      );
-    }
-
-    if (!userPwd || userPwd == undefined) {
-      throw new CustomError(
-        "Auth Service",
-        "User password not found in database",
-        404
-      );
-    }
-
-    const matched = await BcryptHelper.compareHash(password, userPwd);
-    if (!matched) {
-      throw new CustomError(
-        "Auth Service",
-        "Password does not match the one in record",
-        403
-      );
-    }
-
-    const userPayload: JwtPayload = { email: userEmail, password: userPwd };
-    const userToken = JWTAuthenticationHelper.generateToken(userPayload);
-
-    // Add JWT to cache for refresh token (mock)
-    this.cache.add("token");
-
-    return userToken;
   }
 
   public async profile(email: string): Promise<User | null> {
@@ -83,7 +101,7 @@ export default class AuthService implements IAuthService {
       }
       return res;
     } catch (error) {
-      throw new CustomError("Auth service", "something somethig", 500);
+      throw new Error(String(error));
     }
   }
 }

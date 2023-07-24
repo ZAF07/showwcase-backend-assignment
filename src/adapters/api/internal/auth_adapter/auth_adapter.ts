@@ -13,6 +13,10 @@ export default class AuthAdapterHTTP {
   public async register(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
+
+      if (!email || !password) {
+        throw new CustomError("Auth Service", "Missing required fields", 400);
+      }
       const data = await this.authService.register(email, password);
       res.json({ message: "success", data });
     } catch (error) {

@@ -54,5 +54,34 @@ You need to have the Docker desktop installed on your computer.
 
 ## Usage:
 
+To ensure that you have the correct build (typescript compiler), build the package before you start the container using: `npm run build`.
+
 Simply run `docker-compose up`.
-This will start PostgreSQL, Redis, and the application at once.
+This will start PostgreSQL, Redis, and the application instance at once.
+
+You can start interacting with the API.
+
+This application has 2 exposed endpoints:
+
+1. User (Returns a random user and is not a protected route)
+2. Auth (Allows you to register, login, and get a user profile. The `profile` route is protected with JWT)
+
+How to get a JWT token to be authorized to use the `api/auth/profile` route?
+
+1. Register a new user @ `POST /api/auth/register` (Your profile will be saved in the system with the given email & password)
+2. Login the user @ `POST /api/auth/login` (You must pass the same credentials you gave when registering. You will get a JWT token which expires in `20 seconds`)
+3. Make the call to `/api/auth/profile`. You need to add an `Authorization` header in the request headers with the value of your JWT token
+
+Troubleshoot Docker start up:
+
+These are some common errors faced when running `docker-compose up`
+
+1. `error: database "showwdb" does not exist`
+   Fix:
+1. Find the Postgres's container's ID: Open a new terminal and run `docker ps`
+1. Open an interactive shell inside the Postgres container: `docker exec -it <container-id> sh`
+1. Connect to `psql` inside the container: `psql -U <POSTGRES_USER>`
+1. Manually create a database inside the container: `create database <db-name>`
+1. Close the terminal session: `ctrl+d`
+1. Restart the containers: `docker-compose down` then `docker-compose up`
+   > Note: This is a brute force fix. After you created the DB and restart the containers, a volume mapped to project root (`.db`) will contain the information for starting Postgres with a database in the container
