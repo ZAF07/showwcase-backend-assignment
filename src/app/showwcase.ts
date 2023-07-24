@@ -80,8 +80,8 @@ export default class App {
       this.authService = new MockAuthService(new MockPostgresDBAdapter());
       return;
     }
-    const pad = new PostgresDBAdapter(this.appConfig.datastore);
-    this.authService = new AuthService(pad, this.cacheAdapter);
+    const dbAdapter = new PostgresDBAdapter(this.appConfig.datastore);
+    this.authService = new AuthService(dbAdapter);
     this.userService = new UserService(this.cacheAdapter, this.userServiceAPI);
   }
 

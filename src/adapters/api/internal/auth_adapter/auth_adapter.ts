@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { IAuthService } from "../../../../core/ports/auth_service_interface/auth_service_interface";
 import CustomError from "../../../../utils/errors/errors";
+import { User } from "../../../../core/domain/models/user";
 
 declare global {
   namespace Express {
@@ -21,11 +22,11 @@ export default class AuthAdapterHTTP {
   public async register(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-
       if (!email || !password) {
         throw new CustomError("Auth Service", "Missing required fields", 400);
       }
-      const data = await this.authService.register(email, password);
+      const user: User = { email, password };
+      const data = await this.authService.register(user);
       res.json({ message: "success", data });
     } catch (error) {
       next(error);
@@ -38,11 +39,12 @@ export default class AuthAdapterHTTP {
       if (!email || !password) {
         throw new CustomError(
           "Auth Adapter",
-          "Missing data in request body",
+          "User email or password is missing in request body",
           400
         );
       }
-      const token = await this.authService.login(email, password);
+      const currentUser = { email, password };
+      const token = await this.authService.login(currentUser);
       res.json({ message: "login success", token });
     } catch (error) {
       next(error);

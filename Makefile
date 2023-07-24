@@ -27,5 +27,8 @@ start-local-d:
 start-local:
 	npm run dev
 
-test:
+test: clear-test-cache
 	npx jest --detectOpenHandles
+
+clear-test-cache: 
+	npx jest --clearCache

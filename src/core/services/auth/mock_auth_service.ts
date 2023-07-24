@@ -12,13 +12,23 @@ export default class MockAuthService implements IAuthService {
     this.profile = this.profile.bind(this);
   }
 
-  public async register(email: string, password: string): Promise<User | null> {
+  public async register(user: User): Promise<User | null> {
     try {
-      const userExists = await this.db.getUser(email);
-      if (userExists?.email == email) {
+      const { email, password } = user;
+      if (!email || !password) {
+        throw new CustomError(
+          "Auth Service",
+          "Missing email or password in request",
+          400
+        );
+      }
+
+      const newUser: User = { email, password };
+      const currentUser = await this.db.getUser(newUser.email);
+      if (currentUser !== null) {
         throw new CustomError("Auth service", "User already exists", 409);
       }
-      const newUser = { email, password };
+
       const res = await this.db.createProfile(newUser);
       return res;
     } catch (error) {
@@ -29,18 +39,34 @@ export default class MockAuthService implements IAuthService {
     }
   }
 
-  public async login(email: string, password: string): Promise<string | null> {
+  public async login(user: User): Promise<string | null> {
     // This is the testing user that is in the mock db
     // { email: "mock@mail.com", password: "000" };
     try {
       let userEmail;
       let userPwd;
 
+      const { email, password } = user;
+      if (!email || !password) {
+        throw new CustomError(
+          "Auth Service",
+          "User email or password is missing in request",
+          400
+        );
+      }
+
       const res = await this.db.getUser(email);
+      if (!res || res == null) {
+        throw new CustomError(
+          "Auth Service",
+          `User ${email} not found in database`,
+          404
+        );
+      }
+
       userEmail = res?.email;
       userPwd = res?.password;
-
-      if (res?.email != email) {
+      if (!userEmail || userEmail == undefined) {
         throw new CustomError(
           "Auth Service",
           `User ${email} not found in database`,
@@ -88,8 +114,15 @@ export default class MockAuthService implements IAuthService {
 
   public async profile(email: string): Promise<User | null> {
     try {
+      if (!email || email == "") {
+        throw new CustomError(
+          "Auth Service",
+          "User email not found in request",
+          400
+        );
+      }
       const res = await this.db.getProfile(email);
-      if (res?.email !== email) {
+      if (!res || res == null) {
         throw new CustomError("Auth Service", "User not found", 404);
       }
       return res;

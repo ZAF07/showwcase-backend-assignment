@@ -1,8 +1,7 @@
-import { Pool, PoolClient } from "pg";
+import { PoolClient } from "pg";
 import { User } from "../../../core/domain/models/user";
 import { IDatastoreInterface } from "../../../core/ports/datastore_interface/datastore_interface";
 import { connectToPostgres } from "../../../infrastructure/db/postgres/postgres_conn";
-import CustomError from "../../../utils/errors/errors";
 import { datastore } from "../../../types/types";
 
 export default class PostgresDBAdapter implements IDatastoreInterface {
