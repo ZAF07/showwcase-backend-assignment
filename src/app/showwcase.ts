@@ -23,6 +23,7 @@ import PostgresDBAdapter from "../adapters/db/postgres/postgres";
 import MockUserService from "../core/services/user/mock_user_service";
 import MockPostgresDBAdapter from "../adapters/db/postgres/mock_postgres";
 import MockAuthService from "../core/services/auth/mock_auth_service";
+import JWTAuthenticationHelper from "../utils/middleware/auth_middleware/auth_middleware";
 
 // The app class represents the entire app. It initialises all dependencies and starts the application ..
 export default class App {
@@ -44,6 +45,9 @@ export default class App {
     this.appConfig = LoadConfig();
     this.app = Express();
     this.app.use(Express.json());
+
+    // Sets the JWT expires time read from the config file
+    JWTAuthenticationHelper.expiresIn = this.appConfig.jwt.expires;
 
     // Initialise all dependencies. The order matters
     this.initLogger();

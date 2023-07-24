@@ -75,7 +75,9 @@ You can start interacting with the API.
 You can also run the application locally without Docker.
 You have one dependency as of now: `PostgreSQL`.
 
-To start the application locally with a database, simply run `make start-local`
+To start the application locally with a database, simply run `make start-local-d`
+
+To start the application locally with your own database, simply run: `make start-local`
 
 ## Application information
 
@@ -89,6 +91,10 @@ How to get a JWT token to be authorized to use the `api/auth/profile` route?
 1. Register a new user @ `POST /api/auth/register` (Your profile will be saved in the system with the given email & password)
 2. Login the user @ `POST /api/auth/login` (You must pass the same credentials you gave when registering. You will get a JWT token which expires in `20 seconds`)
 3. Make the call to `/api/auth/profile`. You need to add an `Authorization` header in the request headers with the value of your JWT token
+
+### JWT Expire
+
+The current setting is that the JWT setting expires in 20 seconds
 
 ### Configs
 

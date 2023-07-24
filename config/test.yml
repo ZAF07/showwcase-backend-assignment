@@ -1,3 +1,4 @@
+# NOT USED YET. TO BE USED FOR TESTING ENVS
 server:
   port: 3000
   read_timeout: 15

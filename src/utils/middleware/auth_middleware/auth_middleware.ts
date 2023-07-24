@@ -12,7 +12,7 @@ declare global {
   }
 }
 export default class JWTAuthenticationHelper {
-  private static readonly expiresIn: string = "30s";
+  public static expiresIn: string = "30s";
 
   static generateToken(payload: JwtPayload): string {
     return jwt.sign(payload, secretKey, { expiresIn: this.expiresIn });

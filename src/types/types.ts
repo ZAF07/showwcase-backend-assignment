@@ -33,6 +33,7 @@ export interface ILoggerInterface {
 
 export type ApplicationConfig = {
   server: { port: number };
+  jwt: { expires: string };
   datastore: datastore;
   cache: { type: string; url: string; password: string; username: string };
   externalService: externalService;

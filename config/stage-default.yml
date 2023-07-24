@@ -1,7 +1,11 @@
+# USED IN DOCKER START UP
 server:
   port: 3000
   read_timeout: 15
   write_timeout: 15
+
+jwt:
+  expires: "20s"
 
 logger:
   error_file: errors.log
@@ -10,8 +14,8 @@ logger:
 cache:
   type: redis
   url: localhost:6379
-  password:
-  username:
+  password: docker
+  username: docker
 
 datastore:
   name: showwdb

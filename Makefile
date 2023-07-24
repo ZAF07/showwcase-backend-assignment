@@ -19,8 +19,11 @@ start-db:
 	docker-compose up db
 
 # Starts the application locally with database container
-start-local:
+start-local-d:
 	docker-compose up -d db
+	npm run dev
+
+start-local:
 	npm run dev
 
 test:

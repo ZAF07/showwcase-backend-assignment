@@ -3,11 +3,18 @@ import { configDefaultValues } from "./utils/constants/constants";
 import { ApplicationConfig, datastore } from "./types/types";
 
 const LoadAppConfig = (): ApplicationConfig => {
-  const config: ApplicationConfig = {
+  console.log("CONFIG FILE USED: ====> ", config.get("cache.password"));
+  const appConfig: ApplicationConfig = {
     server: {
       port: getConfigWithDefaultInt(
         "server.port",
         configDefaultValues.SERVER_PORT
+      ),
+    },
+    jwt: {
+      expires: getConfigWithDefaultString(
+        "jwt.expires",
+        configDefaultValues.JWT_EXPIRES
       ),
     },
     datastore: {
@@ -98,7 +105,7 @@ const LoadAppConfig = (): ApplicationConfig => {
     },
   };
 
-  return config;
+  return appConfig;
 };
 
 const getConfigWithDefaultInt = (key: string, defaultValue: any): number => {
