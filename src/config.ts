@@ -3,7 +3,6 @@ import { configDefaultValues } from "./utils/constants/constants";
 import { ApplicationConfig, datastore } from "./types/types";
 
 const LoadAppConfig = (): ApplicationConfig => {
-  console.log("CONFIG FILE USED: ====> ", config.get("cache.password"));
   const appConfig: ApplicationConfig = {
     server: {
       port: getConfigWithDefaultInt(
