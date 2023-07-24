@@ -62,7 +62,7 @@ This will start PostgreSQL, Redis, and the application instance at once.
 To start in detached mode, run : `make start-d`
 To stop the detached mode, run : `make stop-d`
 
-To remove the comtainers, run : `make down`
+To remove the containers, run : `make down`
 
 You can start interacting with the API.
 
