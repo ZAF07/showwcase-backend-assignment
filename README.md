@@ -80,10 +80,11 @@ Error: `error: database "showwdb" does not exist`
 
 Fix:
 
+> Note: This is a brute force fix. After you created the DB and restart the containers, a volume mapped to project root (`.db`) will contain the information for starting Postgres with a database in the container
+
 1. Find the Postgres's container's ID: Open a new terminal and run `docker ps`
 1. Open an interactive shell inside the Postgres container: `docker exec -it <container-id> sh`
 1. Connect to `psql` inside the container: `psql -U <POSTGRES_USER>`
 1. Manually create a database inside the container: `create database <db-name>`
 1. Close the terminal session: `ctrl+d`
 1. Restart the containers: `docker-compose down` then `docker-compose up`
-   > Note: This is a brute force fix. After you created the DB and restart the containers, a volume mapped to project root (`.db`) will contain the information for starting Postgres with a database in the container
