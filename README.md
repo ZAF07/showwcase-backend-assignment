@@ -56,8 +56,13 @@ You need to have the Docker desktop installed on your computer.
 
 To ensure that you have the correct build (typescript compiler), build the package before you start the container using: `npm run build`.
 
-Simply run `docker-compose up`.
+Simply run `make start`.
 This will start PostgreSQL, Redis, and the application instance at once.
+
+To start in detached mode, run : `make start-d`
+To stop the detached mode, run : `make stop-d`
+
+To remove the comtainers, run : `make down`
 
 You can start interacting with the API.
 
