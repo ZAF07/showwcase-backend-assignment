@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { JwtPayload } from "../../../types/types";
 import CustomError from "../../errors/errors";
 
-const secretKey = "extr4_s30r137-k3y";
 declare global {
   namespace Express {
     interface Request {
@@ -13,14 +12,15 @@ declare global {
 }
 export default class JWTAuthenticationHelper {
   public static expiresIn: string = "30s";
+  public static secret: string = "extr4_s30r137-k3y";
 
   static generateToken(payload: JwtPayload): string {
-    return jwt.sign(payload, secretKey, { expiresIn: this.expiresIn });
+    return jwt.sign(payload, this.secret, { expiresIn: this.expiresIn });
   }
 
   static verifyToken(token: string): JwtPayload | null {
     try {
-      const decoded = jwt.verify(token, secretKey) as JwtPayload;
+      const decoded = jwt.verify(token, this.secret) as JwtPayload;
       return decoded;
     } catch (error) {
       return null;
@@ -49,7 +49,6 @@ export default class JWTAuthenticationHelper {
 
     // Set the decoded user payload in the request object for further processing
     (req as any).user = decodedUser?.email;
-    console.log("====> ", req.user);
 
     next();
   }

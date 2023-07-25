@@ -48,6 +48,7 @@ export default class App {
 
     // Sets the JWT expires time read from the config file
     JWTAuthenticationHelper.expiresIn = this.appConfig.jwt.expires;
+    JWTAuthenticationHelper.secret = this.appConfig.jwt.secret;
 
     // Initialise all dependencies. The order matters
     this.initLogger();

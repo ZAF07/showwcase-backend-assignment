@@ -27,6 +27,11 @@ start-local-d:
 start-local:
 	npm run dev
 
+build: npm-build start
+
+npm-build:
+	npm run build
+
 test: clear-test-cache
 	npx jest --detectOpenHandles
 

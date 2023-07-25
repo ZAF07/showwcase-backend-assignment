@@ -15,6 +15,10 @@ const LoadAppConfig = (): ApplicationConfig => {
         "jwt.expires",
         configDefaultValues.JWT_EXPIRES
       ),
+      secret: getConfigWithDefaultString(
+        "jwt.secret",
+        configDefaultValues.JWT_SECRET
+      ),
     },
     datastore: {
       name: getConfigWithDefaultString(

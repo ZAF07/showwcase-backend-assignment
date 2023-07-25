@@ -1,38 +1,5 @@
 // App config default values
-// export const configDefaultValues = {
-//   DATABASE_NAME: process.env.DATABASE_NAME,
-//   DATABASE_USER: process.env.DATABASE_USER,
-//   DATABASE_PASSWORD: process.env.NODE_ENV, // 💡 EXAMPLE
-//   DATABASE_HOST: process.env.DATABASE_HOST,
-//   DATABASE_PORT: process.env.DATABASE_PORT,
-//   DATABASE_MAX_CONNS: process.env.DATABASE_MAX_CONNS,
-//   DATABASE_SSL: process.env.DATABASE_SSL,
 
-//   CACHE_TYPE: process.env.CACHE_TYPE,
-//   CACHE_URL: process.env.CACHE_URL,
-//   CACHE_PASSWORD: process.env.CACHE_PASSWORD,
-//   CACHE_USERNAME: process.env.CACHE_USERNAME,
-
-//   // HTTP_CLIENT_TYPE: process.env.HTTP_CLIENT_TYPE,
-//   // HTTP_CLIENT_BASE: process.env.HTTP_CLIENT_BASE_URL,
-//   // hHTTP_CLIENT_TIMEOUT: process.env.HTTP_CLIENT_BASE_TIMEOUT,
-//   // HTTP_CLIENT_ACCEPT: process.env.HTTP_CLIENT_ACCEPT,
-
-//   RANDOM_USER_SERVICE_BASE_URL: process.env.RANDOM_USER_SERVICE_BASE_URL,
-//   RANDOM_USER_SERVICE_PATH: process.env.RANDOM_USER_SERVICE_PATH,
-//   RANDOM_USER_SERVICE_CLIENT_TYPE: process.env.RANDOM_USER_SERVICE_CLIENT_TYPE,
-//   RANDOM_USER_SERVICE_CLIENT_TIMEOUT:
-//     process.env.RANDOM_USER_SERVICE_CLIENT_TIMEOUT,
-//   RANDOM_USER_SERVICE_CLIENT_HACCEPT:
-//     process.env.RANDOM_USER_SERVICE_CLIENT_HACCEPT,
-
-//   LOGGER_LOG_FILE: process.env.LOGGER_ERROR_FILE,
-//   LOGGER_ERROR_FILE: process.env.LOGGER_LOG_FILE,
-
-//   SERVER_PORT: process.env.SERVER_PORT,
-//   SERVER_READ_TIMEOUT: process.env.SERVER_READ_TIMEOUT,
-//   SERVER_WRITE_TIMEOUT: process.env.SERVER_WRITE_TIMEOUT,
-// };
 export const configDefaultValues = {
   DATABASE_NAME: process.env.DATABASE_NAME,
   DATABASE_USER: process.env.DATABASE_USER,
@@ -59,6 +26,8 @@ export const configDefaultValues = {
   LOGGER_ERROR_FILE: "errors.log",
 
   JWT_EXPIRES: process.env.JWT_EXPIRES,
+  JWT_SECRET: process.env.JWT_SECRET,
+
   SERVER_PORT: process.env.SERVER_PORT,
   SERVER_READ_TIMEOUT: process.env.SERVER_READ_TIMEOUT,
   SERVER_WRITE_TIMEOUT: process.env.SERVER_WRITE_TIMEOUT,

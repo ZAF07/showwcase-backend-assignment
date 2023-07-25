@@ -92,7 +92,9 @@ How to get a JWT token to be authorized to use the `api/auth/profile` route?
 2. Login the user @ `POST /api/auth/login` (You must pass the same credentials you gave when registering. You will get a JWT token which expires in `20 seconds`)
 3. Make the call to `/api/auth/profile`. You need to add an `Authorization` header in the request headers with the value of your JWT token
 
-### JWT Expire
+### JWT
+
+#### Token Expire
 
 The current setting is that the JWT token expires in 20 seconds.
 
@@ -100,6 +102,14 @@ You can change this if you like simply by configuring the value in the specific 
 
 For local application start-up, `local-local.yml` is used.
 For running in Docker, `stage-default.yml` is used.
+
+#### JWT Secret
+
+The JWT secret is set in the config file already but you can change it if you like.
+Simply go to `./config/local-local.yml` or `./config/stage-default.yml` and change the value.
+
+🚨 Remember to re-build the application for changes to take effect.
+Also remember to delete the docker image for your app before re-building the application and container for the changes to take effect in the container if you choose to run it with Docker
 
 ### Configs
 

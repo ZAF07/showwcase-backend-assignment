@@ -6,6 +6,7 @@ server:
 
 jwt:
   expires: "20s"
+  secret: q*{g!WJ$2MYa7&sK9Z56_8h+d-pTL
 
 logger:
   error_file: errors.log
