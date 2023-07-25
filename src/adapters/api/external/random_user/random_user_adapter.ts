@@ -1,5 +1,6 @@
+import { RandomUserDetailsDTO } from "../../../../core/domain/dtos/user_dto";
 import { IFetchRandomUserAPI } from "../../../../core/ports/api_interface/random_user_api_interface/random_user_api_interface";
-import { Result } from "../../../../core/domain/dtos/user_dto";
+// import { Result } from "../../../../core/domain/dtos/user_dto";
 import { externalService } from "../../../../types/types";
 import { app } from "../../../../utils/constants/constants";
 import APIClient from "./http";
@@ -27,7 +28,7 @@ export default class UserAPI implements IFetchRandomUserAPI {
     }
   }
 
-  public async fetchRandomUser(): Promise<Result | null> {
+  public async fetchRandomUser(): Promise<RandomUserDetailsDTO | null> {
     try {
       const response = await this.apiClient.fetchRandomUser();
       if (response == null) {

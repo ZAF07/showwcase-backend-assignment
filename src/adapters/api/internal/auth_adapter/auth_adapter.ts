@@ -32,7 +32,6 @@ export default class AuthAdapterHTTP {
       next(error);
     }
   }
-
   public async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
@@ -55,7 +54,7 @@ export default class AuthAdapterHTTP {
     try {
       // Retrieved user email from the auth middleware
       const email = req.user;
-      if (!email) {
+      if (!email || email == undefined) {
         throw new CustomError("Auth Adapter", "Missing email in request", 400);
       }
 

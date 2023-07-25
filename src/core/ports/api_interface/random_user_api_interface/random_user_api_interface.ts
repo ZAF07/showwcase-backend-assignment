@@ -1,5 +1,5 @@
-import { RandomUserDetails, Result } from "../../../domain/dtos/user_dto";
+import { RandomUserDetailsDTO } from "../../../domain/dtos/user_dto";
 
 export interface IFetchRandomUserAPI {
-  fetchRandomUser(): Promise<Result | null>;
+  fetchRandomUser(): Promise<RandomUserDetailsDTO | null>;
 }

@@ -1,4 +1,4 @@
-import { RandomUser } from "../../domain/models/user";
+import { RandomUserDetailsDTO } from "../../domain/dtos/user_dto";
 import { IUserService } from "../../ports/user_service_interface/user_service_interface";
 import { ICacheRepository } from "../../ports/cache_interface/cacheInterface";
 import { IFetchRandomUserAPI } from "../../ports/api_interface/random_user_api_interface/random_user_api_interface";
@@ -10,11 +10,11 @@ export class UserService implements IUserService {
     private cacheRepo: ICacheRepository,
     private randomAPIAdapter: IFetchRandomUserAPI
   ) {
-    this.fetchRamdonUser = this.fetchRamdonUser.bind(this);
+    this.fetchRandomUser = this.fetchRandomUser.bind(this);
   }
 
   // Fetches a random user from an external API
-  public async fetchRamdonUser(): Promise<RandomUser | null> {
+  public async fetchRandomUser(): Promise<RandomUserDetailsDTO | null> {
     try {
       const randomUser = await this.randomAPIAdapter.fetchRandomUser();
 
@@ -23,12 +23,16 @@ export class UserService implements IUserService {
         return null;
       }
 
-      // Ensure type safety for firstName and age properties
-      const user: RandomUser = {
-        firstName: randomUser?.name.first || "Unknown",
-        age: randomUser?.dob.age || 0,
+      // filter sensitive data from the response since this is not a protected route
+      const f: RandomUserDetailsDTO = {
+        ...randomUser,
+        login: {
+          username: randomUser.login?.username,
+          uuid: randomUser.login?.uuid,
+        },
       };
-      return user;
+
+      return f;
     } catch (error) {
       if (error instanceof CustomError) {
         throw new CustomError("User Service", error.message, error.statusCode);

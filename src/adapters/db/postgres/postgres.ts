@@ -47,6 +47,7 @@ export default class PostgresDBAdapter implements IDatastoreInterface {
     }
   }
 
+  // DAOs should take in DTOs instead og models. However, in some cases, a model could work too if it is small enough
   public async createProfile(user: User): Promise<User | null> {
     const insertQuery =
       "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING email";

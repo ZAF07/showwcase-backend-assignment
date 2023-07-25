@@ -1,10 +1,13 @@
 import { IUserService } from "../../ports/user_service_interface/user_service_interface";
-import { RandomUser } from "../../domain/models/user";
+import { RandomUserDetailsDTO } from "../../domain/dtos/user_dto";
 
 export default class MockUserService implements IUserService {
-  public async fetchRamdonUser(): Promise<RandomUser | null> {
+  public async fetchRandomUser(): Promise<RandomUserDetailsDTO | null> {
     try {
-      return { firstName: "MOCK USER", age: 1000 };
+      return {
+        name: { first: "John Test", last: "Last" },
+        gender: "test gender",
+      };
     } catch (error) {
       throw new Error("error mock");
     }
